@@ -1,12 +1,17 @@
 package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -28,6 +33,7 @@ public class TimelineActivity extends AppCompatActivity
     List<Tweet> tweets;
     TweetsAdapter adapter;
     SwipeRefreshLayout swipeContainer;
+    Toolbar toolbar;
 
 
     @Override
@@ -39,8 +45,22 @@ public class TimelineActivity extends AppCompatActivity
         client = TwitterApp.getRestClient(this);
 
         swipeContainer = findViewById(R.id.swipeContainer);
+        toolbar = findViewById(R.id.toolbar);
+
+        setTitle(null);
+
+        setSupportActionBar(toolbar);
 
         // Configure the refreshing colors
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            swipeContainer.setProgressBackgroundColorSchemeColor(getResources().getColor(android.R.color.black, null));
+        }
+        else
+        {
+            swipeContainer.setProgressBackgroundColorSchemeColor(getResources().getColor(android.R.color.black));
+        }
+
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,

@@ -1,12 +1,16 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import com.codepath.apps.restclienttemplate.TimeFormatter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Tweet
 {
     public String body;
@@ -33,8 +37,8 @@ public class Tweet
         return tweets;
     }
 
-//    public static getFormattedTimestamp ()
-//    {
-//
-//    }
+    public String getFormattedTimestamp()
+    {
+        return TimeFormatter.getTimeDifference(createdAt);
+    }
 }

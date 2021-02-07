@@ -6,6 +6,8 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
+        <item name="android:windowActionBar" > false </item>
+        <item name="android:windowNoTitle" > true </item>
     </style>
 
     <!-- Application theme. -->
