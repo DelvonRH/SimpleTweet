@@ -39,7 +39,7 @@ public class DetailActivity extends AppCompatActivity
         tvName.setText(tweet.user.name);
         tvBody.setText(tweet.body);
         Glide.with(this).load(tweet.user.profileImageUrl).transform(new CircleCrop()).into(ivProfileImage2);
-        tvScreenName.setText("@" +tweet.user.screenName);
+        tvScreenName.setText("@" + tweet.user.screenName);
         SimpleDateFormat date = new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZZZ yyyy");
         SimpleDateFormat customDate = new SimpleDateFormat("h:mm a · dd MMM yy");
 
