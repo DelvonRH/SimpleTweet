@@ -1,11 +1,11 @@
 package com.codepath.apps.restclienttemplate;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.text.format.DateFormat;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -21,7 +21,7 @@ public class DetailActivity extends AppCompatActivity
 {
     Tweet tweet;
     TextView tvName, tvBody, tvCreatedAt, tvScreenName;
-    ImageView ivProfileImage2;
+    ImageView ivProfileImage2, ivPic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,6 +35,7 @@ public class DetailActivity extends AppCompatActivity
         tvCreatedAt = findViewById(R.id.tvCreatedAt);
         tvScreenName = findViewById(R.id.tvScreenName);
         ivProfileImage2 = findViewById(R.id.ivProfileImage2);
+        ivPic = findViewById(R.id.ivPic);
 
         tvName.setText(tweet.user.name);
         tvBody.setText(tweet.body);
@@ -42,6 +43,17 @@ public class DetailActivity extends AppCompatActivity
         tvScreenName.setText("@" + tweet.user.screenName);
         SimpleDateFormat date = new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZZZ yyyy");
         SimpleDateFormat customDate = new SimpleDateFormat("h:mm a · dd MMM yy");
+        if(tweet.mediaURL == null)
+        {
+            ivPic.setVisibility(View.GONE);
+        }
+        else
+        {
+            ivPic.setVisibility(View.VISIBLE);
+        }
+        Glide.with(this).load(tweet.mediaURL).into(ivPic);
+//        Log.d("MediaLink","Media Path " + tweet.mediaURL);
+
 
         try {
             Date Date = date.parse(tweet.createdAt);

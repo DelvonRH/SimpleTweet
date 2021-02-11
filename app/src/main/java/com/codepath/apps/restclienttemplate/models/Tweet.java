@@ -1,5 +1,7 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import android.util.Log;
+
 import com.codepath.apps.restclienttemplate.TimeFormatter;
 
 import org.json.JSONArray;
@@ -15,6 +17,7 @@ public class Tweet
 {
     public String body;
     public String createdAt;
+    public String mediaURL;
     public long id;
     public User user;
 
@@ -24,6 +27,17 @@ public class Tweet
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.id = jsonObject.getLong("id");
+        if(jsonObject.has("extended_entities"))
+        {
+            JSONObject extendedEntities = jsonObject.getJSONObject("extended_entities");
+
+            if(extendedEntities.has("media"))
+            {
+                JSONArray media = extendedEntities.getJSONArray("media");
+                tweet.mediaURL = media.getJSONObject(0).getString("media_url");
+                Log.d("Media","Media Path " + tweet.mediaURL);
+            }
+        }
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         return tweet;
     }
