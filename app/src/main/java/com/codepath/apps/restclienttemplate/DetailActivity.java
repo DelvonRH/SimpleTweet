@@ -17,6 +17,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class DetailActivity extends AppCompatActivity
 {
     Tweet tweet;
@@ -51,7 +53,7 @@ public class DetailActivity extends AppCompatActivity
         {
             ivPic.setVisibility(View.VISIBLE);
         }
-        Glide.with(this).load(tweet.mediaURL).into(ivPic);
+        Glide.with(this).load(tweet.mediaURL).transform(new RoundedCornersTransformation(50, 30)).into(ivPic);
 //        Log.d("MediaLink","Media Path " + tweet.mediaURL);
 
 
