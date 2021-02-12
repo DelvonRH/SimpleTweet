@@ -11,6 +11,9 @@ public class User
 {
     public String name, screenName, profileImageUrl;
 
+    // Empty constructor
+    public User(){}
+
     public static User fromJson(JSONObject jsonObject) throws JSONException
     {
         User user = new User();
