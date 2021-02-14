@@ -16,11 +16,14 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,29 +47,8 @@ public class TimelineActivity extends AppCompatActivity
     SwipeRefreshLayout swipeContainer;
     Toolbar toolbar;
     EndlessRecyclerViewScrollListener scrollListener;
+    FloatingActionButton btnComposeBtn;
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == R.id.compose)
-        {
-            // Compose icon is tapped
-            // Navigate to Compose Activity
-            Intent intent = new Intent(this, ComposeActivity.class);
-            startActivityForResult(intent, REQUEST_CODE);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
@@ -95,6 +77,19 @@ public class TimelineActivity extends AppCompatActivity
 
         swipeContainer = findViewById(R.id.swipeContainer);
         toolbar = findViewById(R.id.toolbar);
+        btnComposeBtn = findViewById(R.id.btnComposeBtn);
+
+        btnComposeBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                // Compose icon is tapped
+                // Navigate to Compose Activity
+                Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
 
         setTitle(null);
 
