@@ -18,7 +18,7 @@ public class Tweet
     public String body;
     public String createdAt;
     public String mediaURL;
-    public long id;
+    public Long id;
     public User user;
 
     // Empty constructor

@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,7 +24,7 @@ public class DetailActivity extends AppCompatActivity
 {
     Tweet tweet;
     TextView tvName, tvBody, tvCreatedAt, tvScreenName;
-    ImageView ivProfileImage2, ivPic;
+    ImageView ivProfileImage2, ivPic, ivReply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,6 +39,7 @@ public class DetailActivity extends AppCompatActivity
         tvScreenName = findViewById(R.id.tvScreenName);
         ivProfileImage2 = findViewById(R.id.ivProfileImage2);
         ivPic = findViewById(R.id.ivPic);
+        ivReply = findViewById(R.id.ivReply);
 
         tvName.setText(tweet.user.name);
         tvBody.setText(tweet.body);
@@ -63,5 +65,16 @@ public class DetailActivity extends AppCompatActivity
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        ivReply.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(DetailActivity.this, ComposeActivity.class);
+                intent.putExtra("Reply", Parcels.wrap(tweet));
+                startActivity(intent);
+            }
+        });
     }
 }

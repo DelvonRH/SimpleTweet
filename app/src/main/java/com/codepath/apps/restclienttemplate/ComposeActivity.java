@@ -39,6 +39,7 @@ public class ComposeActivity extends AppCompatActivity
 {
     public static final int MAX_TWEET_LENGTH = 280;
     public static final String TAG = "ComposeActivity";
+    Long id;
 
     EditText etCompose;
     Button btnTweet;
@@ -49,7 +50,7 @@ public class ComposeActivity extends AppCompatActivity
     ProgressBar progressBar;
     ImageView ivClose;
     TextView tvCounter;
-
+    Tweet tweet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -58,6 +59,7 @@ public class ComposeActivity extends AppCompatActivity
         setContentView(R.layout.activity_compose);
 
         client = TwitterApp.getRestClient(this);
+        tweet = Parcels.unwrap(getIntent().getParcelableExtra("Reply"));
 
         context = this;
 
@@ -150,6 +152,12 @@ public class ComposeActivity extends AppCompatActivity
             }
         });
 
+        if(tweet != null)
+        {
+            id = tweet.id;
+            etCompose.setText("@" + tweet.user.screenName);
+        }
+
         // Set Click Listener on button
         btnTweet.setOnClickListener(new View.OnClickListener()
         {
@@ -170,6 +178,7 @@ public class ComposeActivity extends AppCompatActivity
                 }
                 Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_LONG).show();
                 // Make an API Call to Twitter to publish a Tweet
+
                 client.publishTweet(tweetContent, new JsonHttpResponseHandler()
                 {
                     @Override
@@ -196,7 +205,7 @@ public class ComposeActivity extends AppCompatActivity
                     {
                         Log.e(TAG, "onFailure to publish tweet", throwable);
                     }
-                });
+                }, id);
 
             }
         });
