@@ -2,6 +2,12 @@ package com.codepath.apps.restclienttemplate.models;
 
 import android.util.Log;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.codepath.apps.restclienttemplate.TimeFormatter;
 
 import org.json.JSONArray;
@@ -13,12 +19,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Parcel
+@Entity(foreignKeys = @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "userId"))
 public class Tweet
 {
+    @ColumnInfo
     public String body;
+    @ColumnInfo
     public String createdAt;
+    @ColumnInfo
     public String mediaURL;
+    @ColumnInfo
+    @PrimaryKey
     public Long id;
+
+    @ColumnInfo
+    public long userId;
+
+    @Ignore
     public User user;
 
     // Empty constructor
@@ -30,6 +47,8 @@ public class Tweet
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.id = jsonObject.getLong("id");
+        User user = User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.userId = user.id;
         if(jsonObject.has("extended_entities"))
         {
             JSONObject extendedEntities = jsonObject.getJSONObject("extended_entities");
@@ -41,7 +60,7 @@ public class Tweet
                 Log.d("Media","Media Path " + tweet.mediaURL);
             }
         }
-        tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.user = user;
         return tweet;
     }
 
